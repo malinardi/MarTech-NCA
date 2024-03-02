@@ -89,9 +89,8 @@ nca.model <- nca_analysis(dados, c("Contractual_detail", "Goodwill_trust","Compe
 
 ### 2.2 Interpretação dos resultados
 ```{r}
-
+nca_output(nca.model, summaries = TRUE, bottlenecks = TRUE)
 nca_output(nca.model, summaries = TRUE, bottlenecks = TRUE, pdf = TRUE)
-
 ```
 
 
