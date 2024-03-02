@@ -1,0 +1,114 @@
+---
+title: "NCA - NECESSARY CONDITION ANALYSIS"
+author: "MarTech IPAM 2024"
+date: "2024-03-01"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, }
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(error = FALSE)
+
+
+```
+
+# Necessary Condition Analysis  
+
+## 1. Setup do ambiente
+
+### 1.1 Instalação e leitura das bibliotecas (pacotes) necessários
+```{r}
+
+options(repos = "https://cran.rstudio.com")
+
+rm(list = ls())
+if(!require(pacman)) install.packages("pacman")
+library(pacman)
+
+pacman::p_load(tidyverse,
+                 Hmisc,
+                 stargazer,
+                 visdat,
+                 rmarkdown, 
+                 knitr, 
+                 GGally, 
+                 summarytools,
+                 extremevalues,
+                 DataExplorer,
+                 gplots,
+                 ggplot2,
+                 SmartEDA,
+                 kableExtra,
+                 e1071,
+                 caret,
+                 rstatix,
+                 lmtest,
+                 ggpmisc,
+                 car,
+                 psych,
+                 fastDummies,
+                 NCA
+                 )
+p_loaded()
+
+```
+
+### 1.2 Carga e vista geral do ficheiro
+
+```{r}
+
+# ficheiro de exemplo do NCA
+data(nca.example2)
+dados <- nca.example2
+
+colnames(dados)[2] <- "Contractual_detail"
+colnames(dados)[3] <- "Goodwill_trust"
+colnames(dados)[4] <- "Competence_trust"
+
+#varificar se há alguma linha repetida
+anyDuplicated(dados)
+
+#Exploração da estrutura do data frame - visão 1
+ExpData(dados,type=1) 
+#Exploração da estrutura do data frame - visão 2
+ExpData(dados,type=2) 
+#Exploração da estrutura do data frame - visão 3
+str(dados) 
+#Exploração da estrutura do data frame - visão 4
+plot_intro(dados)
+
+
+
+```
+# Avaliar a equação da reta
+```{r}
+reg <- lm(Innovation ~ Contractual_detail + Goodwill_trust + Competence_trust, dados)
+summary(reg)
+```
+
+
+## 2 NCA
+
+### 2.1 O modelo
+```{r}
+
+# Criar um modelo de NCA
+nca.model <- nca_analysis(dados, c("Contractual_detail", "Goodwill_trust","Competence_trust"), "Innovation",  bottleneck.x = "percentage", bottleneck.y = "percentage", test.rep = 1000)
+
+
+```
+
+### 2.2 Interpretação dos resultados
+```{r}
+
+nca_output(nca.model, summaries = TRUE, bottlenecks = TRUE)
+
+```
+
+
+
+
