@@ -30,27 +30,12 @@ if(!require(pacman)) install.packages("pacman")
 library(pacman)
 
 pacman::p_load(tidyverse,
-                 Hmisc,
-                 stargazer,
-                 visdat,
                  rmarkdown, 
                  knitr, 
                  GGally, 
-                 summarytools,
-                 extremevalues,
                  DataExplorer,
                  gplots,
-                 ggplot2,
-                 SmartEDA,
-                 kableExtra,
-                 e1071,
-                 caret,
-                 rstatix,
-                 lmtest,
-                 ggpmisc,
-                 car,
-                 psych,
-                 fastDummies,
+                 SmartEDA
                  NCA
                  )
 p_loaded()
@@ -105,7 +90,7 @@ nca.model <- nca_analysis(dados, c("Contractual_detail", "Goodwill_trust","Compe
 ### 2.2 Interpretação dos resultados
 ```{r}
 
-nca_output(nca.model, summaries = TRUE, bottlenecks = TRUE)
+nca_output(nca.model, summaries = TRUE, bottlenecks = TRUE, pdf = TRUE)
 
 ```
 
