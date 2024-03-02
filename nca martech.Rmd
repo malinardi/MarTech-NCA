@@ -35,7 +35,7 @@ pacman::p_load(tidyverse,
                  GGally, 
                  DataExplorer,
                  gplots,
-                 SmartEDA
+                 SmartEDA,
                  NCA
                  )
 p_loaded()
